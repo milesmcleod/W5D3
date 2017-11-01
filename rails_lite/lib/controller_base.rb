@@ -7,7 +7,7 @@ class ControllerBase
   attr_reader :req, :res, :params
 
   # Setup the controller
-  def initialize(req, res, params)
+  def initialize(req, res, params = {})
     @req = req
     @res = res
     @params = params
@@ -52,6 +52,10 @@ class ControllerBase
   # method exposing a `Session` object
   def session
     @session ||= Session.new(@req)
+  end
+
+  def flash
+    @flash ||= Flash.new(@req)
   end
 
   # use this with the router to call action_name (:index, :show, :create...)
