@@ -58,6 +58,19 @@ class ControllerBase
     @flash ||= Flash.new(@req)
   end
 
+  def asset
+    # @res['Content-type'] #= mime-type
+    path = File.dirname(__FILE__)
+    content = File.read(path + "#{@req.path}")
+    if content
+      @res.write(content)
+    else
+      @res.status = 404
+    end
+    @rendered = true
+    @res.finish
+  end
+
   # use this with the router to call action_name (:index, :show, :create...)
   def invoke_action(name)
     self.send(name)
